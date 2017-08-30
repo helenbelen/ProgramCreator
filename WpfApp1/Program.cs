@@ -15,16 +15,10 @@ namespace WpfApp1
         public string programName, sourcePathString, folderPathString;
         public ArrayList programFeatures;
 
-        
-        public Program()
-        {
-            programName = "";
-            sourcePathString = "";
-            folderPathString = @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Programs";
-        }
-
+       //To Create An Instance of Program A name is Required
         public Program(string name)
         {
+            programFeatures = new ArrayList();
             programName = name;
             sourcePathString = "";
             folderPathString = @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Programs";
@@ -33,16 +27,18 @@ namespace WpfApp1
 
         public Program (string name, string sourceFilePath, string programFolderPath)
         {
+            programFeatures = new ArrayList();
             programName = name;
             sourcePathString = sourceFilePath;
             folderPathString = programFolderPath;
         }
-
+        //Handles The Get & Set Of The Program Name
         public string Name 
         {
             get => programName;
             set => programName = value;
         }
+        //Handles The Get & Set Of The Program Source File Path
 
         public string sourcePath
         {
@@ -50,42 +46,64 @@ namespace WpfApp1
             set => sourcePathString = value;
         }
 
+        //Handles The Get & Set Of The Program folder Path
+
         public string folderPath
         {
             get => folderPath;
             set => folderPath = value;
         }
 
+        //This Method Adds Feature To Any Program
         public void addFeature (Feature newFeature)
         {
             try
             {
-                programFeatures.Add(newFeature);
-            }
-            catch
-            {
-                if(newFeature == null)
+                //Check If Feature Is Already In The Array
+                foreach (Feature f in programFeatures)
                 {
-                    throw new ArgumentNullException("The Feature Is Null and Cannot be added");
-                }
-                else
-                {
-                    throw new ArgumentException("The Feature Is NOT Null but Another Error Prevented The Feature From Being Added");
+                    if (f.Name == newFeature.Name)
+                    {
+                        Console.WriteLine("You Cannot Add The Same Feature More Than Once");
+                        return;
+                    }
+
                 }
                 
+                
+                programFeatures.Add(newFeature);
+                
+               
+                
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
+
             }
         }
 
         public void removeFeature (Feature newFeature)
         {
-            if (programFeatures.Contains(newFeature))
+            try
             {
-                programFeatures.Remove(newFeature);
+                if (programFeatures.Contains(newFeature))
+                {
+                    int i = programFeatures.IndexOf(newFeature);
+                    programFeatures.RemoveAt(i);                    
+
+                }
+                else
+                {
+                    throw new ArgumentNullException("This Feature Is Not Apart Of This Program");
+                }
+
             }
-            else
+            catch
             {
-                Console.Write("This Feature Is Not Apart Of This Program");
+                throw new ArgumentOutOfRangeException("Remove The Index Of The Feature Failed");
             }
+           
         }
 
         public int numberOfFeatures() => programFeatures.Count;

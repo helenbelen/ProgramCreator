@@ -17,14 +17,14 @@ namespace WpfApp1
         public FileHandler() { }
 
 
-        public string getCode (Feature feature)
+        public string getCode (string filePath)
         {
             string readString = "";
             string read;
-           if(File.Exists(feature.featureSourcePathString))
+           if(File.Exists(filePath))
             {
 
-                readStream = File.OpenText(feature.featureSourcePathString);
+                readStream = File.OpenText(filePath);
                 while ((read = readStream.ReadLine()) != null)
                 {
                     readString += read;
@@ -62,7 +62,7 @@ namespace WpfApp1
             writerStream.WriteLine(code);
             writerStream.Close();
            
-            return file.Name;
+            return fileName;
 
         }
 

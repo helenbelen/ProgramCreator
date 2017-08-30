@@ -10,7 +10,7 @@ namespace WpfApp1
     {
         public string featureName, featureSourcePathString, featureFolderString;
 
-       
+       //Features Must Have A Name At Minimum
         public Feature (string name)
         {
             featureName = name;
@@ -25,18 +25,22 @@ namespace WpfApp1
             featureSourcePathString = featureSourcePath;
             featureFolderString = featureFolderPath;
         }
-
+        //Handles The Get & Set Of Feature Name
         public string Name
         {
             get => featureName;
             set => featureName = value;
         }
 
+        //Handles The Get & Set Of Feature Source Path
+
         public string sourcePath
         {
             get => featureSourcePathString;
             set => featureSourcePathString = value;
         }
+
+        //Handles The Get & Set Of Feature Folder Path
 
         public string folderPath
         {
