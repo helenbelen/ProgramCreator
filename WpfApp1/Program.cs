@@ -10,30 +10,24 @@ namespace WpfApp1
 
 
 {
-    public class Program
+    public class Program : Feature
     {
         public string programName, sourcePathString, folderPathString;
-        public ArrayList programFeatures;
+        private ArrayList programFeatures;
 
        //To Create An Instance of Program A name is Required
-        public Program(string name)
+       public Program (string name, string folder) : base(name,folder)
         {
             programFeatures = new ArrayList();
-            programName = name;
-            sourcePathString = "";
+            //programName = name;
+            //sourcePathString = "";
             folderPathString = @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Programs";
         
         }
 
-        public Program (string name, string sourceFilePath, string programFolderPath)
-        {
-            programFeatures = new ArrayList();
-            programName = name;
-            sourcePathString = sourceFilePath;
-            folderPathString = programFolderPath;
-        }
+        
         //Handles The Get & Set Of The Program Name
-        public string Name 
+        /*public string Name 
         {
             get => programName;
             set => programName = value;
@@ -53,6 +47,7 @@ namespace WpfApp1
             get => folderPath;
             set => folderPath = value;
         }
+        */
 
         //This Method Adds Feature To Any Program
         public void addFeature (Feature newFeature)
@@ -107,6 +102,8 @@ namespace WpfApp1
         }
 
         public int numberOfFeatures() => programFeatures.Count;
+
         
+                 
     }
 }

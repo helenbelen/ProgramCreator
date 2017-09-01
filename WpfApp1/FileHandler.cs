@@ -1,23 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.CodeDom.Compiler;
 using System.IO;
 
 namespace WpfApp1
 {
     public class FileHandler
     {
-        FileInfo file;
-        FileStream fileStream;
-        StreamReader readStream;
-        StreamWriter writerStream;
+        static FileInfo file;
+        static FileStream fileStream;
+        static StreamReader readStream;
+        static StreamWriter writerStream;
+        static CodeDomProvider codeProvider;
+        static CompilerParameters parameters;
+        static CompilerResults compilerResults;
+        static string errorFile = @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Programs\Errors.txt";
 
-        public FileHandler() { }
 
 
-        public string getCode (string filePath)
+
+
+        public static string getCode (string filePath)
         {
             string readString = "";
             string read;
@@ -36,37 +38,90 @@ namespace WpfApp1
             return readString;
         }
 
-        public bool CreateFile (Program program)
+        public static bool CreateFile (Program program)
         {
             try
             {
-                file = new FileInfo(program.Name + ".txt");
-                fileStream = file.Create();
-                program.sourcePathString = program.folderPathString + file.Name;
+               
+                program.sourcePath = program.folderPathString + @"\" + program.Name + ".txt";
+                fileStream = File.Create(program.sourcePath);
                 fileStream.Close();
             }
             catch
             {
-                System.Console.WriteLine("The Create Of " + file.Name + " Was Not Successful");
+                System.Console.WriteLine("The Create Of " + program.Name + ".txt" + " Was Not Successful");
                 return false;
             }
 
             return true;
         }
 
-        public string WriteCode (string fileName, string code)
+        public static string WriteCode (string fileName, string code)
         {
             file = new FileInfo(fileName);
-                    
             writerStream = file.CreateText();
-            writerStream.WriteLine(code);
+            writerStream.Write(code);
             writerStream.Close();
            
             return fileName;
 
         }
 
+        public static bool CompileCode (Feature f)
+        {
 
+            try
+            {
+
+                codeProvider = CodeDomProvider.CreateProvider("CSharp");
+                parameters = new CompilerParameters();
+                // Generate an executable instead of 
+                // a class library.
+                parameters.GenerateExecutable = true;
+                // Set the assembly file name to generate.
+                string OutputFile = f.Name + ".OutFile.txt";
+                parameters.OutputAssembly = OutputFile;
+                // Generate debug information.
+                parameters.IncludeDebugInformation = true;
+                // Add an assembly reference.
+                parameters.ReferencedAssemblies.Add("System.dll");
+                // Save the assembly as a physical file.
+                parameters.GenerateInMemory = false;
+                 // Set the level at which the compiler 
+                // should start displaying warnings.
+                parameters.WarningLevel = 3;
+                 // Set whether to treat all warnings as errors.
+                parameters.TreatWarningsAsErrors = false;
+                 // Set compiler argument to optimize output.
+                parameters.CompilerOptions = "/optimize";
+                string myCode = getCode(f.sourcePath);
+                compilerResults = codeProvider.CompileAssemblyFromSource(parameters, myCode);
+                if (compilerResults.Errors.Count > 0)
+                {
+                    foreach (CompilerError error in compilerResults.Errors) { 
+                    WriteCode(errorFile, "Line number " + error.Line +
+                    ", Error Number: " + error.ErrorNumber +
+                    ", '" + error.ErrorText + ";" +
+                    Environment.NewLine + Environment.NewLine);
+                    }
+                    return false;
+                }
+                else
+                {
+                    WriteCode(errorFile, "Compile Was Successful At " + System.DateTime.Now);
+                }
+               
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.Write(e.Data);
+                return false;
+            }
+
+            return true;
+        }
+
+        
 
     }
 }

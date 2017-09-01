@@ -6,25 +6,19 @@ using System.Threading.Tasks;
 
 namespace WpfApp1
 {
-    public class Feature       
+    public class Feature     
     {
         public string featureName, featureSourcePathString, featureFolderString;
 
        //Features Must Have A Name At Minimum
-        public Feature (string name)
+        public Feature (string name, string folder)
         {
             featureName = name;
+            featureFolderString = folder;
             featureSourcePathString = "";
-            featureFolderString = @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Features";
-
         }
 
-        public Feature (string name, string featureSourcePath, string featureFolderPath)
-        {
-            featureName = name;
-            featureSourcePathString = featureSourcePath;
-            featureFolderString = featureFolderPath;
-        }
+     
         //Handles The Get & Set Of Feature Name
         public string Name
         {

@@ -13,7 +13,7 @@ namespace ProgramCreatorTest
         public void NewProgramName_SetsCorrectly()
         {
             string name = "MyProgram";
-            Program program = new Program(name);
+            Program program = new Program(name, "Hey");
             Assert.AreEqual(name, program.Name, "The Program Name Is Not Correct");
 
 
@@ -22,24 +22,18 @@ namespace ProgramCreatorTest
         [TestMethod]
         public void FolderPathCorrect_FirstConstructor()
         {
-            Program program = new Program("My Program");
+            Program program = new Program("My Program", @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Programs");
             String expected = @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Programs";
             Assert.AreEqual(expected, program.folderPathString, "The Folder Path Is Not Setting Correcting In The First Program Constructor");
         }
 
-        [TestMethod]
-        public void FolderPathCorrect_SecondConstructor()
-        {
-            Program program = new Program("Hello");
-            String expected = @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Programs";
-            Assert.AreEqual(expected, program.folderPathString, "The Folder Path Is Not Setting Correcting In The First Program Constructor");
-        }
+       
 
         [TestMethod]
         public void FeaturesAddedCorrectly_ToProgram()
         {
-            Program program = new Program("My Program");
-            Feature feature = new Feature("New Feature");
+            Program program = new Program("My Program", @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Programs");
+            Feature feature = new Feature("New Feature", @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Features");
             program.addFeature(feature);
             int expected = 1;
             int actual = program.numberOfFeatures();
@@ -50,8 +44,8 @@ namespace ProgramCreatorTest
         [TestMethod]
         public void FeaturesRemovedCorrectly_FromProgram()
         {
-            Program program = new Program("My Program");
-            Feature feature = new Feature("New Feature");
+            Program program = new Program("My Program", @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Programs");
+            Feature feature = new Feature("New Feature", @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Features");
             program.addFeature(feature);
             program.removeFeature(feature);
 
@@ -61,9 +55,9 @@ namespace ProgramCreatorTest
         [TestMethod]
         public void DuplicateFeaturesNotAdded_ToProgram()
         {
-            Program program = new Program("My Program");
-            Feature feature = new Feature("New Feature");
-            Feature feature1 = new Feature("New Feature");
+            Program program = new Program("My Program", @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Programs");
+            Feature feature = new Feature("New Feature", @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Features");
+            Feature feature1 = new Feature("New Feature", @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Features");
             program.addFeature(feature);
             program.addFeature(feature1);
             
@@ -77,8 +71,8 @@ namespace ProgramCreatorTest
         {
             
             string filePath = @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Features\Test.txt";
-            FileHandler fh = new FileHandler();
-            string actual = fh.getCode(filePath);
+            
+            string actual = FileHandler.getCode(filePath);
             string expected = "This is a test of the get code method.";
             
 
@@ -89,12 +83,12 @@ namespace ProgramCreatorTest
         [TestMethod]
         public void FileHandlerWritingCorrectly_ToFeatureSourceFile()
         {
-            FileHandler fh = new FileHandler();
+            
             string filepath = @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Programs\InProgress.txt";
             string codetoWrite = "Hey Guys this is my new program!";
-            string returnfilepath = fh.WriteCode(filepath,codetoWrite);
+            string returnfilepath = FileHandler.WriteCode(filepath,codetoWrite);
 
-            string actual = fh.getCode(returnfilepath);
+            string actual = FileHandler.getCode(returnfilepath);
             string expected = codetoWrite;
 
             
@@ -106,13 +100,22 @@ namespace ProgramCreatorTest
         [TestMethod]
         public void CreateFileCorrectly_ForProgram()
         {
-            FileHandler fh = new FileHandler();
-            Program p = new Program("Hello");
+            Program p = new Program("Hello", @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Programs");
+            FileHandler.CreateFile(p);
             bool actual = File.Exists(p.sourcePath);
             bool expected = true;
             Assert.AreEqual(expected, actual, "File Handler Is Not Creating File Correctly");
         }
+        [TestMethod]
+        public void Test_Compiler()
+        {
+            Feature f = new Feature("Feature1", @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Programs\");
+            f.sourcePath = @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Programs\BoilerPlate1.txt";
+            bool actual = FileHandler.CompileCode(f);
+            bool expected = true;
 
+            Assert.AreEqual(expected, actual, "The Compiler isn't working");
+        }
 
 
     }
