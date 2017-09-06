@@ -109,7 +109,7 @@ namespace WpfApp1
                     
                     return false;
                 }
-              
+                
                
             }
             catch (Exception e)
@@ -121,20 +121,29 @@ namespace WpfApp1
             return true;
         }
 
-        public string runCode(string executableString)
+        public static string runCode(string executableString)
         {
-            Process p = new Process();
-            //Runs the program per the Process only
-            p.StartInfo.UseShellExecute = false;
-            //Set A Property That allows Us to read the Output
-            p.StartInfo.RedirectStandardOutput = true;
-            //Specifies the Excecutable File
-            p.StartInfo.FileName = executableString;
-            p.Start();
+            string output = "";
 
-            // To avoid deadlocks, always read the output stream first and then wait.
-            string output = p.StandardOutput.ReadToEnd();
-            p.WaitForExit();
+            try
+            {
+                Process p = new Process();
+                //Runs the program per the Process only
+                p.StartInfo.UseShellExecute = false;
+                //Set A Property That allows Us to read the Output
+                p.StartInfo.RedirectStandardOutput = true;
+                //Specifies the Excecutable File
+                p.StartInfo.FileName = executableString;
+                p.Start();
+
+                // To avoid deadlocks, always read the output stream first and then wait.
+                output = p.StandardOutput.ReadToEnd();
+                p.WaitForExit();
+            }
+            catch(FileNotFoundException e)
+            {
+                Console.Write(e.Data);
+            }
 
             return output;
         }

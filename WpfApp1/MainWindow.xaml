@@ -11,9 +11,10 @@
             <ColumnDefinition Width="243*"/>
             <ColumnDefinition Width="275*"/>
         </Grid.ColumnDefinitions>
-        <ListBox Grid.Column="1" HorizontalAlignment="Left" Height="196" Margin="60.8,28,0,0" VerticalAlignment="Top" Width="151" Background="#FFA4B1D7"/>
-        <Button x:Name="RemoveButton" Content="Remove Program" Grid.Column="1" HorizontalAlignment="Left" Margin="9.8,245,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click" RenderTransformOrigin="1.168,0.205"/>
-        <Button x:Name="RunButton" Content="Run Program" Grid.Column="1" HorizontalAlignment="Left" Margin="164.8,245,0,0" VerticalAlignment="Top" Width="75"/>
+        <ListBox Grid.Column="1" HorizontalAlignment="Left" Height="94" Margin="34.8,28,0,0" VerticalAlignment="Top" Width="177" Background="#FFA4B1D7"/>
+        <Button x:Name="RemoveButton" Content="Remove Program" Grid.Column="1" HorizontalAlignment="Left" Margin="9.8,245,0,0" VerticalAlignment="Top" Width="110" RenderTransformOrigin="1.168,0.205"/>
+        <Button x:Name="RunButton" Content="Run Program" Grid.Column="1" HorizontalAlignment="Left" Margin="164.8,245,0,0" VerticalAlignment="Top" Width="75" Click="RunButton_Click"/>
+        <TextBox x:Name="Program_Output" Grid.Column="1" HorizontalAlignment="Left" Height="52" Margin="34.8,143,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="177" Background="#FFE5D4D4"/>
 
     </Grid>
 </Window>

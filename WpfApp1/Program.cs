@@ -19,35 +19,11 @@ namespace WpfApp1
        public Program (string name, string folder) : base(name,folder)
         {
             programFeatures = new ArrayList();
-            //programName = name;
-            //sourcePathString = "";
             folderPathString = @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Programs";
-        
+       
         }
 
-        
-        //Handles The Get & Set Of The Program Name
-        /*public string Name 
-        {
-            get => programName;
-            set => programName = value;
-        }
-        //Handles The Get & Set Of The Program Source File Path
-
-        public string sourcePath
-        {
-            get => sourcePathString;
-            set => sourcePathString = value;
-        }
-
-        //Handles The Get & Set Of The Program folder Path
-
-        public string folderPath
-        {
-            get => folderPath;
-            set => folderPath = value;
-        }
-        */
+       
 
         //This Method Adds Feature To Any Program
         public void addFeature (Feature newFeature)

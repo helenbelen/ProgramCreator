@@ -26,7 +26,11 @@ namespace WpfApp1
             
         }
 
-       
+        private void RunButton_Click(object sender, RoutedEventArgs e)
+        {
+            Program_Output.Text = FileHandler.runCode(@"C:\Users\HelenBelen\Documents\Visual Studio 2017\Projects\ProgramCreator\ProgramCreatorTest\bin\Debug\Feature1.OutFile.exe");
+           
+        }
     }
 }
 
