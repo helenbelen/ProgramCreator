@@ -1,4 +1,4 @@
-﻿<Window x:Class="WpfApp1.MainWindow"
+﻿<Window x:Name="ProgramCreatorMain" x:Class="WpfApp1.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,6 +7,13 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="243*"/>
+            <ColumnDefinition Width="275*"/>
+        </Grid.ColumnDefinitions>
+        <ListBox Grid.Column="1" HorizontalAlignment="Left" Height="196" Margin="60.8,28,0,0" VerticalAlignment="Top" Width="151" Background="#FFA4B1D7"/>
+        <Button x:Name="RemoveButton" Content="Remove Program" Grid.Column="1" HorizontalAlignment="Left" Margin="9.8,245,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click" RenderTransformOrigin="1.168,0.205"/>
+        <Button x:Name="RunButton" Content="Run Program" Grid.Column="1" HorizontalAlignment="Left" Margin="164.8,245,0,0" VerticalAlignment="Top" Width="75"/>
+
     </Grid>
 </Window>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.CodeDom.Compiler;
 using System.IO;
+using System.Diagnostics;
 
 namespace WpfApp1
 {
@@ -79,7 +80,7 @@ namespace WpfApp1
                 // a class library.
                 parameters.GenerateExecutable = true;
                 // Set the assembly file name to generate.
-                string OutputFile = f.Name + ".OutFile.txt";
+                string OutputFile = f.Name + ".OutFile.exe";
                 parameters.OutputAssembly = OutputFile;
                 // Generate debug information.
                 parameters.IncludeDebugInformation = true;
@@ -96,6 +97,7 @@ namespace WpfApp1
                 parameters.CompilerOptions = "/optimize";
                 string myCode = getCode(f.sourcePath);
                 compilerResults = codeProvider.CompileAssemblyFromSource(parameters, myCode);
+                
                 if (compilerResults.Errors.Count > 0)
                 {
                     foreach (CompilerError error in compilerResults.Errors) { 
@@ -104,12 +106,10 @@ namespace WpfApp1
                     ", '" + error.ErrorText + ";" +
                     Environment.NewLine + Environment.NewLine);
                     }
+                    
                     return false;
                 }
-                else
-                {
-                    WriteCode(errorFile, "Compile Was Successful At " + System.DateTime.Now);
-                }
+              
                
             }
             catch (Exception e)
@@ -121,7 +121,23 @@ namespace WpfApp1
             return true;
         }
 
-        
+        public string runCode(string executableString)
+        {
+            Process p = new Process();
+            //Runs the program per the Process only
+            p.StartInfo.UseShellExecute = false;
+            //Set A Property That allows Us to read the Output
+            p.StartInfo.RedirectStandardOutput = true;
+            //Specifies the Excecutable File
+            p.StartInfo.FileName = executableString;
+            p.Start();
+
+            // To avoid deadlocks, always read the output stream first and then wait.
+            string output = p.StandardOutput.ReadToEnd();
+            p.WaitForExit();
+
+            return output;
+        }
 
     }
 }
