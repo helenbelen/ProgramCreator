@@ -1,10 +1,14 @@
 ﻿using System;
 using System.CodeDom.Compiler;
 using System.IO;
+using System.Linq;
 using System.Diagnostics;
+using System.Collections;
 
-namespace WpfApp1
-{
+namespace WpfApp1 { 
+
+
+
     public class FileHandler
     {
         static FileInfo file;
@@ -17,7 +21,34 @@ namespace WpfApp1
         static string errorFile = @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Programs\Errors.txt";
 
 
+        public static ArrayList filesInDirectory (String folderPath, ArrayList fileList)
+        {
+            try
+            {
+               
+                var files = Directory.EnumerateFiles(folderPath, "*.txt", SearchOption.AllDirectories);
+                 foreach(string filename in files)
+                {
+                    //Adds only the name of the file to the array list not the whole path
+                    int  nameLength = (filename.Length + 1) - (folderPath.Length + 1);
+                    fileList.Add(filename.Substring(folderPath.Length +1, nameLength-1));
 
+                        
+                }
+
+              }
+            catch (UnauthorizedAccessException UAEx)
+            {
+                WriteCode(errorFile, UAEx.Message);
+                Console.WriteLine(UAEx.Message);
+            }
+            catch (PathTooLongException PathEx)
+            {
+                WriteCode(errorFile, PathEx.Message);
+                Console.WriteLine(PathEx.Message);
+            }
+            return fileList;
+        }
 
 
         public static string getCode (string filePath)
@@ -39,18 +70,22 @@ namespace WpfApp1
             return readString;
         }
 
-        public static bool CreateFile (Program program)
+        public static bool CreateFile (Feature program)
         {
             try
             {
-               
-                program.sourcePath = program.folderPathString + @"\" + program.Name + ".txt";
-                fileStream = File.Create(program.sourcePath);
-                fileStream.Close();
+                program.sourcePath = program.folderPath + @"\" + program.Name + ".txt";
+                if (!File.Exists(program.sourcePath))
+                {
+                    
+                    fileStream = File.Create(program.sourcePath);
+                    fileStream.Close();
+                }
+                
             }
-            catch
+            catch (Exception e)
             {
-                System.Console.WriteLine("The Create Of " + program.Name + ".txt" + " Was Not Successful");
+                System.Console.WriteLine("The Create Of " + program.Name + ".txt" + " Was Not Successful " + e.Message);
                 return false;
             }
 
@@ -114,7 +149,8 @@ namespace WpfApp1
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.Write(e.Data);
+                WriteCode(errorFile, e.Data.ToString());
+                
                 return false;
             }
 
@@ -142,6 +178,7 @@ namespace WpfApp1
             }
             catch(FileNotFoundException e)
             {
+                WriteCode(errorFile, e.Data.ToString());
                 Console.Write(e.Data);
             }
 

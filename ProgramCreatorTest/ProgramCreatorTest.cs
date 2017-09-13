@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WpfApp1;
 using System.IO;
+using System.Collections;
 
 namespace ProgramCreatorTest
 {
@@ -116,7 +117,38 @@ namespace ProgramCreatorTest
 
             Assert.AreEqual(expected, actual, "The Compiler isn't working");
         }
+        [TestMethod]
+        public void ReadFilesInDirectory_Correctly()
+        {
+            FileHandler.CreateFile(new Program("P1", @"C: \Users\HelenBelen\Documents\ProgramCreatorFolder\Programs"));
+            FileHandler.CreateFile(new Program("P2", @"C: \Users\HelenBelen\Documents\ProgramCreatorFolder\Programs"));
+            FileHandler.CreateFile(new Program("P3", @"C: \Users\HelenBelen\Documents\ProgramCreatorFolder\Programs"));
+            ArrayList a = new ArrayList();
+            a = FileHandler.filesInDirectory(@"C: \Users\HelenBelen\Documents\ProgramCreatorFolder\Programs", a);
+            bool actual = false;
+            if(a.Contains("P1.txt") && a.Contains("P2.txt") && a.Contains("P3.txt"))
+            {
+                actual = true;
+            }
+           bool expected = true;
+            Assert.AreEqual(expected, actual, "FileHandler Is Not Getting The Corret Number Of FIles");
+        }
 
+        //Test The Program Factory
+        [TestMethod]
+        public void MakesProgram_Correcly()
+        {
+            Program p = new Program("Test1", @"C: \Users\HelenBelen\Documents\ProgramCreatorFolder\Programs");
+            p.addFeature(new Feature("HelloWOrld-Feature", @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Features"));
+            p.addFeature(new Feature("PrintTime-Feature", @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Features"));
+            p.addFeature(new Feature("SimpleMath-Feature", @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Features"));
+            p.addFeature(new Feature("WebsitePrinter-Feature", @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Features"));
+            SimpleFactory factory = new SimpleFactory(p);
+            factory.makeProgram();
+            bool actual = File.Exists(p.sourcePath);
+            bool expected = true;
+            Assert.AreEqual(expected, actual, "Factory Did Not Create Program");
+        }
 
     }
 }

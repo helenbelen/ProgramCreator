@@ -19,8 +19,8 @@ namespace WpfApp1
        public Program (string name, string folder) : base(name,folder)
         {
             programFeatures = new ArrayList();
-            folderPathString = @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Programs";
-       
+            folderPathString = folder;
+        
         }
 
        
@@ -78,6 +78,8 @@ namespace WpfApp1
         }
 
         public int numberOfFeatures() => programFeatures.Count;
+
+        public ArrayList GetFeatures() => programFeatures;
 
         
                  

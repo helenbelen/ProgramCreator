@@ -8,13 +8,27 @@
         Title="MainWindow" Height="350" Width="525">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="243*"/>
             <ColumnDefinition Width="275*"/>
+            <ColumnDefinition Width="243*"/>
         </Grid.ColumnDefinitions>
-        <ListBox Grid.Column="1" HorizontalAlignment="Left" Height="94" Margin="34.8,28,0,0" VerticalAlignment="Top" Width="177" Background="#FFA4B1D7"/>
-        <Button x:Name="RemoveButton" Content="Remove Program" Grid.Column="1" HorizontalAlignment="Left" Margin="9.8,245,0,0" VerticalAlignment="Top" Width="110" RenderTransformOrigin="1.168,0.205"/>
-        <Button x:Name="RunButton" Content="Run Program" Grid.Column="1" HorizontalAlignment="Left" Margin="164.8,245,0,0" VerticalAlignment="Top" Width="75" Click="RunButton_Click"/>
-        <TextBox x:Name="Program_Output" Grid.Column="1" HorizontalAlignment="Left" Height="52" Margin="34.8,143,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="177" Background="#FFE5D4D4"/>
+        <TextBox x:Name="Program_Output" Grid.Column="1" HorizontalAlignment="Left" Height="264" Margin="23.8,38,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="209" Background="#FFFFDACE"/>
+        <GroupBox x:Name="creation_Grid" Header="Create Your Program" HorizontalAlignment="Left" Height="139" Margin="18,14,0,0" VerticalAlignment="Top" Width="247" Background="#FFFFDACE">
+            <ListView x:Name="myFeature_listview" HorizontalAlignment="Left" Height="100" Margin="0,10,0,0" VerticalAlignment="Top" Width="100" SelectionMode="Multiple">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </GroupBox>
+        <GroupBox Header="List Of Current Programs" HorizontalAlignment="Left" Height="142" Margin="18,169,0,0" VerticalAlignment="Top" Width="247" Background="#FFF9A88D"/>
+        <Button x:Name="clearprogram_button" Content="Clear" HorizontalAlignment="Left" Margin="128,97,0,0" VerticalAlignment="Top" Width="121" Height="19"/>
+        <Button x:Name="save_button" Content="Save" HorizontalAlignment="Left" Margin="128,127,0,0" VerticalAlignment="Top" Width="121" Height="19"/>
+        <TextBox x:Name="programname_textbox" HorizontalAlignment="Left" Height="45" Margin="128,38,0,0" TextWrapping="Wrap" Text="Enter A Name For Your Program" VerticalAlignment="Top" Width="121" FontSize="9"/>
+        <ListBox x:Name="program_listbox" HorizontalAlignment="Left" Height="84" Margin="34,194,0,0" VerticalAlignment="Top" Width="215" Background="#FFA4B1D7"/>
+        <Button x:Name="RemoveButton" Content="Remove Program" HorizontalAlignment="Left" Margin="34,283,0,0" VerticalAlignment="Top" Width="110" RenderTransformOrigin="1.168,0.205" Height="19"/>
+        <Button x:Name="RunButton" Content="Run Program" HorizontalAlignment="Left" Margin="164,283,0,0" VerticalAlignment="Top" Width="85" Click="RunButton_Click" Height="19"/>
+        <Label Content="Program Output" Grid.Column="1" HorizontalAlignment="Left" Margin="72.8,14,0,0" VerticalAlignment="Top" Width="118"/>
 
     </Grid>
 </Window>

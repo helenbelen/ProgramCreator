@@ -9,15 +9,23 @@ namespace WpfApp1
     public class Feature     
     {
         public string featureName, featureSourcePathString, featureFolderString;
+        public static string FILE_BEGINNING_STRING;
+        public static string FILE_ENDING_STRING = "}}}";
 
-       //Features Must Have A Name At Minimum
-        public Feature (string name, string folder)
+
+        //Features Must Have A Name At Minimum
+        public Feature(string name, string folder)
         {
             featureName = name;
             featureFolderString = folder;
             featureSourcePathString = "";
+            FILE_BEGINNING_STRING = "using System; namespace " + name + " {class" + name + "Class {static void Main(){";
+            FileHandler.CreateFile(this);
         }
 
+
+        public string getBeginningofFile() => FILE_BEGINNING_STRING;
+        public string getEndofFile() => FILE_BEGINNING_STRING;
      
         //Handles The Get & Set Of Feature Name
         public string Name
