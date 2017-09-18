@@ -5,29 +5,87 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Program Creator" Height="444.629" Width="599.078">
     <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="Black" Offset="0"/>
+                <GradientStop Color="#FF245B7C" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="275*"/>
             <ColumnDefinition Width="243*"/>
         </Grid.ColumnDefinitions>
-        <TextBox x:Name="Program_Output" Grid.Column="1" HorizontalAlignment="Left" Height="264" Margin="23.8,38,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="209" Background="#FFFFDACE"/>
-        <GroupBox x:Name="creation_Grid" Header="Create Your Program" HorizontalAlignment="Left" Height="139" Margin="18,14,0,0" VerticalAlignment="Top" Width="247" Background="#FFFFDACE">
-            <ListView x:Name="myFeature_listview" HorizontalAlignment="Left" Height="100" Margin="0,10,0,0" VerticalAlignment="Top" Width="100" SelectionMode="Multiple">
+        <TextBox x:Name="Program_Output" Grid.Column="1" HorizontalAlignment="Left" Height="334" Margin="23.6,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="209" FontFamily="SimSun" IsReadOnly="True" FontStretch="Condensed" TextAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+            <TextBox.Background>
+                <ImageBrush ImageSource="images/bluesquare.png" Stretch="UniformToFill"/>
+            </TextBox.Background>
+        </TextBox>
+        <GroupBox x:Name="creation_Grid" Header="Create Your Program" HorizontalAlignment="Left" Height="190" Margin="18,14,0,0" VerticalAlignment="Top" Width="286" FontWeight="Bold" Foreground="White">
+            <GroupBox.Background>
+                <ImageBrush ImageSource="images/bluesquare.png"/>
+            </GroupBox.Background>
+            <ListView x:Name="myFeature_listview" HorizontalAlignment="Left" Height="148" Margin="25,10,0,0" VerticalAlignment="Top" Width="143" SelectionMode="Multiple" FontStretch="Condensed" FontSize="8" FontFamily="Source Sans Pro Semibold" Foreground="Black" HorizontalContentAlignment="Center">
+                <ListView.Background>
+                    <ImageBrush ImageSource="images/shape_square-512.png"/>
+                </ListView.Background>
                 <ListView.View>
-                    <GridView>
+                    <GridView AllowsColumnReorder="False">
                         <GridViewColumn/>
                     </GridView>
                 </ListView.View>
             </ListView>
         </GroupBox>
-        <GroupBox Header="List Of Current Programs" HorizontalAlignment="Left" Height="142" Margin="18,169,0,0" VerticalAlignment="Top" Width="247" Background="#FFF9A88D"/>
-        <Button x:Name="clearprogram_button" Content="Clear" HorizontalAlignment="Left" Margin="128,97,0,0" VerticalAlignment="Top" Width="121" Height="19"/>
-        <Button x:Name="save_button" Content="Save" HorizontalAlignment="Left" Margin="128,127,0,0" VerticalAlignment="Top" Width="121" Height="19"/>
-        <TextBox x:Name="programname_textbox" HorizontalAlignment="Left" Height="45" Margin="128,38,0,0" TextWrapping="Wrap" Text="Enter A Name For Your Program" VerticalAlignment="Top" Width="121" FontSize="9"/>
-        <ListBox x:Name="program_listbox" HorizontalAlignment="Left" Height="84" Margin="34,194,0,0" VerticalAlignment="Top" Width="215" Background="#FFA4B1D7"/>
-        <Button x:Name="RemoveButton" Content="Remove Program" HorizontalAlignment="Left" Margin="34,283,0,0" VerticalAlignment="Top" Width="110" RenderTransformOrigin="1.168,0.205" Height="19"/>
-        <Button x:Name="RunButton" Content="Run Program" HorizontalAlignment="Left" Margin="164,283,0,0" VerticalAlignment="Top" Width="85" Click="RunButton_Click" Height="19"/>
+        <GroupBox Header="List Of Current Programs" HorizontalAlignment="Left" Height="142" Margin="18,230,0,0" VerticalAlignment="Top" Width="286" Foreground="White" FontWeight="Bold">
+            <GroupBox.Background>
+                <ImageBrush ImageSource="images/bluesquare.png"/>
+            </GroupBox.Background>
+        </GroupBox>
+        <Button x:Name="clearprogram_button" Content="Clear" HorizontalAlignment="Left" Margin="202,124,0,0" VerticalAlignment="Top" Width="65" Height="19" Click="clearprogram_button_Click" Foreground="White" FontWeight="Bold">
+            <Button.Background>
+                <ImageBrush ImageSource="images/free2you6.png" Stretch="UniformToFill"/>
+            </Button.Background>
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+        </Button>
+        <Button x:Name="save_button" Content="Save" HorizontalAlignment="Left" Margin="202,148,0,0" VerticalAlignment="Top" Width="65" Height="19" Click="save_button_Click" Foreground="White">
+            <Button.Background>
+                <ImageBrush ImageSource="images/free2you6.png" Stretch="UniformToFill"/>
+            </Button.Background>
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+        </Button>
+        <TextBox x:Name="programname_textbox" HorizontalAlignment="Left" Height="69" Margin="202,50,0,0" TextWrapping="Wrap" Text="Enter A Name For Your Program" VerticalAlignment="Top" Width="65" FontSize="9" >
+            <TextBox.Background>
+                <ImageBrush ImageSource="images/shape_square-512.png"/>
+            </TextBox.Background>
+        </TextBox>
+        <ListBox x:Name="program_listbox" HorizontalAlignment="Left" Height="84" Margin="41,255,0,0" VerticalAlignment="Top" Width="236" FontFamily="Source Sans Pro" FontWeight="Bold" Foreground="Black" FontSize="10" FontStretch="UltraExpanded" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+            
+
+            <ListBox.Background>
+                <ImageBrush ImageSource="images/shape_square-512.png" Stretch="UniformToFill"/>
+            </ListBox.Background>
+        </ListBox>
+        <Button x:Name="RemoveButton" Content="Remove Program" HorizontalAlignment="Left" Margin="54,339,0,0" VerticalAlignment="Top" Width="110" RenderTransformOrigin="1.168,0.205" Height="19" Click="RemoveButton_Click" FontWeight="Bold" Foreground="White">
+            <Button.Background>
+                <ImageBrush ImageSource="images/free2you6.png" Stretch="UniformToFill"/>
+            </Button.Background>
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+        </Button>
+        <Button x:Name="RunButton" Content="Run Program" HorizontalAlignment="Left" Margin="182,339,0,0" VerticalAlignment="Top" Width="85" Click="RunButton_Click" Height="19" Foreground="White" FontWeight="Bold">
+            <Button.Background>
+                <ImageBrush ImageSource="images/free2you6.png" Stretch="UniformToFill"/>
+            </Button.Background>
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+        </Button>
         <Label Content="Program Output" Grid.Column="1" HorizontalAlignment="Left" Margin="72.8,14,0,0" VerticalAlignment="Top" Width="118"/>
 
     </Grid>

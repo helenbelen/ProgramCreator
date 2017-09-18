@@ -9,16 +9,16 @@ namespace WpfApp1 {
 
 
 
-    public class FileHandler
+    public static class FileHandler
     {
-        static FileInfo file;
+       
         static FileStream fileStream;
         static StreamReader readStream;
         static StreamWriter writerStream;
         static CodeDomProvider codeProvider;
         static CompilerParameters parameters;
         static CompilerResults compilerResults;
-        static string errorFile = @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Programs\Errors.txt";
+        static string errorFile = @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Errors.txt";
 
 
         public static ArrayList filesInDirectory (String folderPath, ArrayList fileList)
@@ -31,21 +31,22 @@ namespace WpfApp1 {
                 {
                     //Adds only the name of the file to the array list not the whole path
                     int  nameLength = (filename.Length + 1) - (folderPath.Length + 1);
-                    fileList.Add(filename.Substring(folderPath.Length +1, nameLength-1));
+                    if(filename.Substring(folderPath.Length + 1, nameLength - 1) != "Test.txt" && filename.Substring(folderPath.Length + 1, nameLength - 1) != "TestCheck.txt" && filename.Substring(folderPath.Length + 1, nameLength - 1) != "Errors.txt")
+                         fileList.Add(filename.Substring(folderPath.Length +1, nameLength-1));
 
                         
                 }
 
               }
-            catch (UnauthorizedAccessException UAEx)
+            catch (UnauthorizedAccessException accessException)
             {
-                WriteCode(errorFile, UAEx.Message);
-                Console.WriteLine(UAEx.Message);
+                WriteCode(errorFile, accessException.Message);
+                Console.WriteLine(accessException.Message);
             }
-            catch (PathTooLongException PathEx)
+            catch (PathTooLongException pathException)
             {
-                WriteCode(errorFile, PathEx.Message);
-                Console.WriteLine(PathEx.Message);
+                WriteCode(errorFile, pathException.Message);
+                Console.WriteLine(pathException.Message);
             }
             return fileList;
         }
@@ -70,32 +71,65 @@ namespace WpfApp1 {
             return readString;
         }
 
-        public static bool CreateFile (Feature program)
+        public static string removeExtensions(string nameWithExtension)
+        {
+            return nameWithExtension.Split('.')[0];
+           
+        }
+
+        public static bool CreateFile (Feature feature)
         {
             try
             {
-                program.sourcePath = program.folderPath + @"\" + program.Name + ".txt";
-                if (!File.Exists(program.sourcePath))
+                feature.sourcePath = feature.folderPath + @"\" + feature.Name + ".txt";
+                if (!File.Exists(feature.sourcePath))
                 {
                     
-                    fileStream = File.Create(program.sourcePath);
+                    fileStream = File.Create(feature.sourcePath);
                     fileStream.Close();
                 }
                 
             }
             catch (Exception e)
             {
-                System.Console.WriteLine("The Create Of " + program.Name  + " Was Not Successful " + e.Message);
+                System.Console.WriteLine(e.Message.ToString());
+                System.Console.WriteLine("The Create Of " + feature.Name  + " Was Not Successful " + e.Message);
                 return false;
             }
 
             return true;
         }
 
+        public static bool deleteFile (Feature feature)
+        {
+            if (!File.Exists(feature.sourcePath))
+
+            {
+
+                return false;
+            }
+            
+            try
+            {
+                
+                File.Delete(feature.sourcePath);
+                if (File.Exists(feature.outputPath))
+                {
+                    File.Delete(feature.outputPath);
+                }
+            }
+            catch (Exception ex)
+            {
+                WriteCode(errorFile, Environment.NewLine + ex.Data);
+
+            }
+            return true;
+        }
+
         public static string WriteCode (string fileName, string code)
         {
-            file = new FileInfo(fileName);
-            writerStream = file.CreateText();
+            
+            writerStream = (new FileInfo(fileName)).CreateText();
             writerStream.Write(code);
             writerStream.Close();
            
@@ -111,24 +145,14 @@ namespace WpfApp1 {
 
                 codeProvider = CodeDomProvider.CreateProvider("CSharp");
                 parameters = new CompilerParameters();
-                // Generate an executable instead of 
-                // a class library.
                 parameters.GenerateExecutable = true;
-                // Set the assembly file name to generate.
                 string OutputFile = f.Name + ".OutFile.exe";
                 parameters.OutputAssembly = OutputFile;
-                // Generate debug information.
                 parameters.IncludeDebugInformation = true;
-                // Add an assembly reference.
                 parameters.ReferencedAssemblies.Add("System.dll");
-                // Save the assembly as a physical file.
                 parameters.GenerateInMemory = false;
-                 // Set the level at which the compiler 
-                // should start displaying warnings.
                 parameters.WarningLevel = 3;
-                 // Set whether to treat all warnings as errors.
                 parameters.TreatWarningsAsErrors = false;
-                 // Set compiler argument to optimize output.
                 parameters.CompilerOptions = "/optimize";
                 string myCode = getCode(f.sourcePath);
                 compilerResults = codeProvider.CompileAssemblyFromSource(parameters, myCode);
@@ -139,12 +163,12 @@ namespace WpfApp1 {
                     WriteCode(errorFile, Environment.NewLine + "Line number " + error.Line +
                     ", Error Number: " + error.ErrorNumber +
                     ", '" + error.ErrorText + ";" +
-                    Environment.NewLine + Environment.NewLine);
+                    Environment.NewLine);
                     }
                     
                     return false;
                 }
-                f.outputFileString = OutputFile;
+                f.outputPath = OutputFile;
 
             }
             catch (Exception e)
@@ -165,19 +189,24 @@ namespace WpfApp1 {
             try
             {
                 Process p = new Process();
-                //Runs the program per the Process only
                 p.StartInfo.UseShellExecute = false;
-                //Set A Property That allows Us to read the Output
                 p.StartInfo.RedirectStandardOutput = true;
-                //Specifies the Excecutable File
                 p.StartInfo.FileName = executableString;
-                p.Start();
+                
+                
+                    p.Start();
 
-                // To avoid deadlocks, always read the output stream first and then wait.
-                output = p.StandardOutput.ReadToEnd();
-                p.WaitForExit();
+                    output = p.StandardOutput.ReadToEnd();
+                    p.WaitForExit();
+                
+             
             }
             catch(FileNotFoundException e)
+            {
+                WriteCode(errorFile, e.Data.ToString());
+                Console.Write(e.Data);
+            }
+            catch (InvalidOperationException e)
             {
                 WriteCode(errorFile, e.Data.ToString());
                 Console.Write(e.Data);

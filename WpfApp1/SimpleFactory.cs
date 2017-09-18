@@ -9,9 +9,9 @@ namespace WpfApp1
 {
     public class SimpleFactory : ProgramFactory
     {
-        ArrayList newProgramFeatures;
-        String code;
-        Program newProgram;
+        private ArrayList newProgramFeatures;
+        private String code;
+        private Program newProgram;
         public SimpleFactory(Program p)
         {
             newProgramFeatures = new ArrayList(p.GetFeatures());
@@ -33,7 +33,14 @@ namespace WpfApp1
             {
                 if (newProgramFeatures.IndexOf(f) == 0)
                 {
-                    code = GetProgramBeginning(f) + FileHandler.getCode(f.sourcePath);
+                    if (newProgramFeatures.Count == 1)
+                    {
+                        code = GetProgramBeginning(f) + FileHandler.getCode(f.sourcePath) + GetProgramEnding(f);
+                    }
+                    else
+                    {
+                        code = GetProgramBeginning(f) + FileHandler.getCode(f.sourcePath);
+                    }
 
 
                 }
@@ -57,7 +64,7 @@ namespace WpfApp1
         public override string CreateProgramFile(Feature f)
         {
             FileHandler.CreateFile(f);
-            string s = FileHandler.WriteCode(f.sourcePath, CreateProgramCode());
+           
 
             return FileHandler.WriteCode(f.sourcePath, CreateProgramCode());
 

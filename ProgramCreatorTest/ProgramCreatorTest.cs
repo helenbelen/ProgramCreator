@@ -7,15 +7,17 @@ using System.Collections;
 namespace ProgramCreatorTest
 {
     [TestClass]
+    
     public class ProgramCreatorTest
     {
+        
         //TEST OF PROGRAM CLASS
         [TestMethod]
         public void NewProgramName_SetsCorrectly()
         {
-            string name = "MyProgram";
-            Program program = new Program(name, "Hey");
-            Assert.AreEqual(name, program.Name, "The Program Name Is Not Correct");
+           
+            Program program = new Program("My Program", "Hey");
+            Assert.AreEqual("My Program", program.Name, "The Program Name Is Not Correct");
 
 
         }
@@ -25,7 +27,7 @@ namespace ProgramCreatorTest
         {
             Program program = new Program("My Program", @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Programs");
             String expected = @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Programs";
-            Assert.AreEqual(expected, program.folderPathString, "The Folder Path Is Not Setting Correcting In The First Program Constructor");
+            Assert.AreEqual(expected, program.folderPath, "The Folder Path Is Not Setting Correcting In The First Program Constructor");
         }
 
        
@@ -34,12 +36,9 @@ namespace ProgramCreatorTest
         public void FeaturesAddedCorrectly_ToProgram()
         {
             Program program = new Program("My Program", @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Programs");
-            Feature feature = new Feature("New Feature", @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Features");
-            program.addFeature(feature);
-            int expected = 1;
-            int actual = program.numberOfFeatures();
-            
-            Assert.AreEqual(expected, actual, "Features Are Not Being Adding Correctly To Programs");
+            program.addFeature(new Feature("New Feature", @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Features"));
+                    
+            Assert.AreEqual(1, program.numberOfFeatures(), "Features Are Not Being Adding Correctly To Programs");
         }
 
         [TestMethod]
@@ -71,14 +70,10 @@ namespace ProgramCreatorTest
         public void FileHandlerReadingCorrectly_FromFeatureSourceFile()
         {
             
-            string filePath = @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Features\Test.txt";
             
-            string actual = FileHandler.getCode(filePath);
+            string actual = FileHandler.getCode(@"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Features\Test.txt");
             string expected = "This is a test of the get code method.Trying to see if it's working.Maybe it is not.";
-
-
-
-
+            
             Assert.AreEqual(expected, actual, "File Handler Is Not Reading From File Correctly");
         }
 
@@ -86,38 +81,59 @@ namespace ProgramCreatorTest
         public void FileHandlerWritingCorrectly_ToFeatureSourceFile()
         {
             
-            string filepath = @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Programs\InProgress.txt";
+           
             string codetoWrite = "Hey Guys this is my new program!";
-            string returnfilepath = FileHandler.WriteCode(filepath,codetoWrite);
+            string returnfilepath = FileHandler.WriteCode(@"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Programs\InProgress.txt", codetoWrite);
+          
 
-            string actual = FileHandler.getCode(returnfilepath);
-            string expected = codetoWrite;
-
-            
-
-
-            Assert.AreEqual(expected, actual, "File Handler Is Not Writing To File Correctly");
+            Assert.AreEqual(codetoWrite, FileHandler.getCode(returnfilepath), "File Handler Is Not Writing To File Correctly");
         }
 
         [TestMethod]
         public void CreateFileCorrectly_ForProgram()
         {
             Program p = new Program("Hello", @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Programs");
-            FileHandler.CreateFile(p);
-            bool actual = File.Exists(p.sourcePath);
-            bool expected = true;
-            Assert.AreEqual(expected, actual, "File Handler Is Not Creating File Correctly");
+           
+            Assert.AreEqual(true, File.Exists(p.sourcePath), "File Handler Is Not Creating File Correctly");
         }
+
         [TestMethod]
         public void Test_Compiler()
         {
             Feature f = new Feature("Feature1", @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Programs\");
-            f.sourcePath = @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Programs\BoilerPlate1.txt";
-            bool actual = FileHandler.CompileCode(f);
-            bool expected = true;
+            f.sourcePath = @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\BoilerPlate1.txt";
+            
 
-            Assert.AreEqual(expected, actual, "The Compiler isn't working");
+            Assert.AreEqual(true, FileHandler.CompileCode(f), "The Compiler isn't working");
         }
+
+        [TestMethod]
+        public void DeletedOutputFileCorrectly_ForProgram()
+        {
+            Program p = new Program("Hello", @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Programs");
+            p.addFeature(new Feature("FunMessage", @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Features"));
+            SimpleFactory factory = new SimpleFactory(p);
+            factory.makeProgram();
+            FileHandler.CompileCode(p);
+            FileHandler.deleteFile(p);
+
+            Assert.AreEqual(false, File.Exists(p.outputPath), "File Handler Is Not Deleting Output File Correctly");
+
+        }
+        [TestMethod]
+        public void DeletedSourceFileCorrectly_ForProgram()
+        {
+            Program p = new Program("Hello", @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Programs");
+            p.addFeature(new Feature("FunMessage", @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Features"));
+            SimpleFactory factory = new SimpleFactory(p);
+            factory.makeProgram();
+            FileHandler.CompileCode(p);
+            FileHandler.deleteFile(p);
+
+            Assert.AreEqual(false, File.Exists(p.sourcePath), "File Handler Is Not Deleting Source File Correctly");
+
+        }
+
         [TestMethod]
         public void ReadFilesInDirectory_Correctly()
         {

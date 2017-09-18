@@ -4,13 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+
 namespace WpfApp1
 {
     public class Feature     
     {
-        public string featureName, featureSourcePathString, featureFolderString,outputFileString;
-        public static string FILE_BEGINNING_STRING;
-        public static string FILE_ENDING_STRING = "}}}";
+        private string featureName, featureSourcePathString, featureFolderString,outputFileString;
+        private static string FILE_BEGINNING_STRING;
+        private static string FILE_ENDING_STRING = "}}}";
 
 
         //Features Must Have A Name At Minimum

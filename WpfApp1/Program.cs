@@ -12,14 +12,14 @@ namespace WpfApp1
 {
     public class Program : Feature
     {
-        public string programName, sourcePathString, folderPathString;
+       
         private ArrayList programFeatures;
 
        //To Create An Instance of Program A name is Required
        public Program (string name, string folder) : base(name,folder)
         {
             programFeatures = new ArrayList();
-            folderPathString = folder;
+           
         
         }
 
