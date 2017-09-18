@@ -8,7 +8,7 @@ namespace WpfApp1
 {
     public class Feature     
     {
-        public string featureName, featureSourcePathString, featureFolderString;
+        public string featureName, featureSourcePathString, featureFolderString,outputFileString;
         public static string FILE_BEGINNING_STRING;
         public static string FILE_ENDING_STRING = "}}}";
 
@@ -19,13 +19,13 @@ namespace WpfApp1
             featureName = name;
             featureFolderString = folder;
             featureSourcePathString = "";
-            FILE_BEGINNING_STRING = "using System; namespace " + name + " {class" + name + "Class {static void Main(){";
+            FILE_BEGINNING_STRING = "using System; namespace " +  name + "{public class " + name + " {public static void Main(){";
             FileHandler.CreateFile(this);
         }
 
 
         public string getBeginningofFile() => FILE_BEGINNING_STRING;
-        public string getEndofFile() => FILE_BEGINNING_STRING;
+        public string getEndofFile() => FILE_ENDING_STRING;
      
         //Handles The Get & Set Of Feature Name
         public string Name
@@ -51,8 +51,15 @@ namespace WpfApp1
             
         }
 
-       
-        
+        public string outputPath
+        {
+            get => outputFileString;
+            set => outputFileString = value;
+
+        }
+
+
+
 
     }
 }

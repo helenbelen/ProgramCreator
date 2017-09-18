@@ -46,7 +46,20 @@ namespace WpfApp1
 
         private void RunButton_Click(object sender, RoutedEventArgs e)
         {
-            Program_Output.Text = FileHandler.runCode(@"C:\Users\HelenBelen\Documents\Visual Studio 2017\Projects\ProgramCreator\ProgramCreatorTest\bin\Debug\Feature1.OutFile.exe");
+            string [] fileArray = new string[2];
+            fileArray = program_listbox.SelectedItem.ToString().Split('.');
+           Program p = new Program(fileArray[0], @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Programs");
+            FileHandler.CompileCode(p);
+            try
+            {
+                Program_Output.Text = FileHandler.runCode(p.outputFileString);
+            }
+            catch(OperationCanceledException exception)
+            {
+                
+                Program_Output.Text = "Program Could Not Run. See Error FIle " + exception.Message;
+            }
+
            
         }
     }

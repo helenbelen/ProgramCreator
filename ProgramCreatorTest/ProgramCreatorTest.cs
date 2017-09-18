@@ -74,8 +74,9 @@ namespace ProgramCreatorTest
             string filePath = @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Features\Test.txt";
             
             string actual = FileHandler.getCode(filePath);
-            string expected = "This is a test of the get code method.";
-            
+            string expected = "This is a test of the get code method.Trying to see if it's working.Maybe it is not.";
+
+
 
 
             Assert.AreEqual(expected, actual, "File Handler Is Not Reading From File Correctly");
@@ -139,16 +140,18 @@ namespace ProgramCreatorTest
         public void MakesProgram_Correcly()
         {
             Program p = new Program("Test1", @"C: \Users\HelenBelen\Documents\ProgramCreatorFolder\Programs");
-            p.addFeature(new Feature("HelloWOrld-Feature", @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Features"));
-            p.addFeature(new Feature("PrintTime-Feature", @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Features"));
-            p.addFeature(new Feature("SimpleMath-Feature", @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Features"));
-            p.addFeature(new Feature("WebsitePrinter-Feature", @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Features"));
+            p.addFeature(new Feature("HelloWOrldFeature", @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Features"));
+            p.addFeature(new Feature("PrintTimeFeature", @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Features"));
+            p.addFeature(new Feature("SimpleMathFeature", @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Features"));
+            p.addFeature(new Feature("WebsitePrinterFeature", @"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Features"));
             SimpleFactory factory = new SimpleFactory(p);
             factory.makeProgram();
-            bool actual = File.Exists(p.sourcePath);
-            bool expected = true;
+            String expected = p.getBeginningofFile() + FileHandler.getCode(@"C:\Users\HelenBelen\Documents\ProgramCreatorFolder\Features\TestCheck.txt") + p.getEndofFile();
+            string actual = FileHandler.getCode(p.sourcePath);
+            
             Assert.AreEqual(expected, actual, "Factory Did Not Create Program");
         }
+
 
     }
 }

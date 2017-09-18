@@ -33,12 +33,13 @@ namespace WpfApp1
             {
                 if (newProgramFeatures.IndexOf(f) == 0)
                 {
-                    code = code + GetProgramBeginning(f);
+                    code = GetProgramBeginning(f) + FileHandler.getCode(f.sourcePath);
+
 
                 }
                 else if (newProgramFeatures.Count - 1 == newProgramFeatures.IndexOf(f))
                 {
-                    code = code + GetProgramEnding(f);
+                    code = code + FileHandler.getCode(f.sourcePath) + GetProgramEnding(f);
                 }
                 else
                 {

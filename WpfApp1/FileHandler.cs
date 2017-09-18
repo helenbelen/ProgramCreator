@@ -85,7 +85,7 @@ namespace WpfApp1 {
             }
             catch (Exception e)
             {
-                System.Console.WriteLine("The Create Of " + program.Name + ".txt" + " Was Not Successful " + e.Message);
+                System.Console.WriteLine("The Create Of " + program.Name  + " Was Not Successful " + e.Message);
                 return false;
             }
 
@@ -136,7 +136,7 @@ namespace WpfApp1 {
                 if (compilerResults.Errors.Count > 0)
                 {
                     foreach (CompilerError error in compilerResults.Errors) { 
-                    WriteCode(errorFile, "Line number " + error.Line +
+                    WriteCode(errorFile, Environment.NewLine + "Line number " + error.Line +
                     ", Error Number: " + error.ErrorNumber +
                     ", '" + error.ErrorText + ";" +
                     Environment.NewLine + Environment.NewLine);
@@ -144,8 +144,8 @@ namespace WpfApp1 {
                     
                     return false;
                 }
-                
-               
+                f.outputFileString = OutputFile;
+
             }
             catch (Exception e)
             {
@@ -154,6 +154,7 @@ namespace WpfApp1 {
                 return false;
             }
 
+            
             return true;
         }
 
