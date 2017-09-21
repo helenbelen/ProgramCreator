@@ -45,8 +45,10 @@ namespace WpfApp1
     public partial class MainWindow : Window
         
     {
-        public ArrayList programList, featureList;
+        private ArrayList programList, featureList;
         FolderNames folderPaths;
+        Program p;
+    
         public MainWindow()
         {
           
@@ -76,7 +78,7 @@ namespace WpfApp1
             {
 
                
-                Program p = new Program(programname_textbox.Text, folderPaths.programFolderPath);
+                p = new Program(programname_textbox.Text, folderPaths.programFolderPath);
                 foreach (Object o in myFeature_listview.SelectedItems)
                 {
                   
@@ -99,7 +101,7 @@ namespace WpfApp1
             if (program_listbox.SelectedItems.Count > 0)
             {
 
-                Program p = new Program(FileHandler.removeExtensions(program_listbox.SelectedItem.ToString()), folderPaths.programFolderPath);
+                p = new Program(FileHandler.removeExtensions(program_listbox.SelectedItem.ToString()), folderPaths.programFolderPath);
                 FileHandler.CompileCode(p);
                 try
                 {
@@ -121,7 +123,7 @@ namespace WpfApp1
                 MessageBoxResult result = MessageBox.Show("Are You Sure You Want To Delete This Program?", "Please Confirm", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
-                    bool success = FileHandler.deleteFile(new Feature(FileHandler.removeExtensions(program_listbox.SelectedItem.ToString()), folderPaths.programFolderPath));
+                      bool success = FileHandler.deleteFile(new Feature(FileHandler.removeExtensions(program_listbox.SelectedItem.ToString()), folderPaths.programFolderPath));
 
                     if (success)
                     {
@@ -161,7 +163,7 @@ namespace WpfApp1
             }
         }
 
-       
+
 
         private bool validateText()
         {

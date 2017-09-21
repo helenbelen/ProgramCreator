@@ -117,7 +117,7 @@ namespace ProgramCreatorTest
             FileHandler.CompileCode(p);
             FileHandler.deleteFile(p);
 
-            Assert.AreEqual(false, File.Exists(p.outputPath), "File Handler Is Not Deleting Output File Correctly");
+            Assert.AreEqual(false, File.Exists(@"C: \Users\HelenBelen\Documents\ProgramCreatorFolder\Programs\Hello.txt"), "File Handler Is Not Deleting Output File Correctly");
 
         }
         [TestMethod]
