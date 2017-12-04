@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace WpfApp1
 {
-    public class Feature     
-    {
+    public class Feature: FeatureInterface
+    { 
         private string featureName, featureSourcePathString, featureFolderString,outputFileString;
         private static string FILE_BEGINNING_STRING;
         private static string FILE_ENDING_STRING = "}}}";
@@ -61,7 +61,7 @@ namespace WpfApp1
         }
 
 
-
+        public virtual FeatureIterator CreateIterator() => throw new NotSupportedException();
 
     }
 }

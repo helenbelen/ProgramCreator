@@ -14,12 +14,13 @@ namespace WpfApp1
     {
        
         private ArrayList programFeatures;
+        private FeatureIterator iterator;
 
        //To Create An Instance of Program A name is Required
        public Program (string name, string folder) : base(name,folder)
         {
             programFeatures = new ArrayList();
-           
+            iterator = this.CreateIterator();
         
         }
 
@@ -28,51 +29,22 @@ namespace WpfApp1
         //This Method Adds Feature To Any Program
         public void addFeature (Feature newFeature)
         {
-            try
-            {
+            
                 //Check If Feature Is Already In The Array
-                foreach (Feature f in programFeatures)
-                {
-                    if (f.Name == newFeature.Name)
-                    {
-                        Console.WriteLine("You Cannot Add The Same Feature More Than Once");
-                        return;
-                    }
+                if (iterator.containsFeature(newFeature.Name) < 0) {
 
+                    programFeatures.Add(newFeature);
+                iterator = CreateIterator();
                 }
-                
-                
-                programFeatures.Add(newFeature);
-                
-               
-                
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("{0} Exception caught.", e);
-
-            }
+          
         }
 
         public void removeFeature (Feature newFeature)
         {
-            try
+            if (iterator.containsFeature(newFeature.Name) >= 0)
             {
-                if (programFeatures.Contains(newFeature))
-                {
-                    int i = programFeatures.IndexOf(newFeature);
-                    programFeatures.RemoveAt(i);                    
-
-                }
-                else
-                {
-                    throw new ArgumentNullException("This Feature Is Not Apart Of This Program");
-                }
-
-            }
-            catch
-            {
-                throw new ArgumentOutOfRangeException("Remove The Index Of The Feature Failed");
+                programFeatures.RemoveAt(iterator.containsFeature(newFeature.Name));
+                iterator = CreateIterator();
             }
            
         }
@@ -81,7 +53,12 @@ namespace WpfApp1
 
         public ArrayList GetFeatures() => programFeatures;
 
-        
-                 
+        public override FeatureIterator CreateIterator()
+        {
+            Feature[] featureArray = new Feature[programFeatures.Count];
+            programFeatures.CopyTo(featureArray);
+            return new FeatureIterator(featureArray);
+        }
+
     }
 }

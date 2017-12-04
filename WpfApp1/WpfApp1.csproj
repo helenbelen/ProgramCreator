@@ -57,6 +57,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="State\ConfirmPasswordState.cs" />
+    <Compile Include="State\InsertPasswordState.cs" />
+    <Compile Include="LoginClass.cs" />
+    <Compile Include="State\NoPasswordState.cs" />
+    <Compile Include="State\PasswordConfirmedState.cs" />
+    <Compile Include="State\State.cs" />
+    <Compile Include="State\StateInterface.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -65,8 +72,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="SimpleFactory.cs" />
-    <Compile Include="Feature.cs" />
+    <Compile Include="Feature\FeatureInterface.cs" />
+    <Compile Include="Iterator\FeatureIterator.cs" />
+    <Compile Include="Iterator\IteratorInterface.cs" />
+    <Compile Include="Factory\SimpleFactory.cs" />
+    <Compile Include="Feature\Feature.cs" />
     <Compile Include="FileHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -75,7 +85,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ProgramFactory.cs" />
+    <Compile Include="Factory\ProgramFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -109,5 +119,6 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
